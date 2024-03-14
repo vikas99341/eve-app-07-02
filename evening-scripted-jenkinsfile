@@ -1,0 +1,16 @@
+node { 
+    def maven_home = tool name: 'mvn_home', type: 'maven'
+    stage('SCM-Checkout') { 
+        git branch: 'main', credentialsId: 'git-credentials', 
+        url: 'https://github.com/vikas99341/eve-app-07-02.git'
+    }
+    stage('Build') {
+        sh "${maven_home}/bin/mvn compile" 
+    }
+    stage('Test') { 
+        sh "${maven_home}/bin/mvn test"
+    }
+    stage('Deploy') { 
+        sh "${maven_home}/bin/mvn package"
+    }
+}
