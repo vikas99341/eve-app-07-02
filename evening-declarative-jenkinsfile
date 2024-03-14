@@ -1,0 +1,29 @@
+pipeline {
+    tools {
+      maven 'mvn_home'
+    }
+    agent any
+    stages {
+        stage('SCM-Checkout') {
+            steps {
+               git branch: 'main', credentialsId: 'git-credentials', 
+               url: 'https://github.com/vikas99341/eve-app-07-02.git' 
+            }
+        }
+        stage('Build') {
+            steps {
+               sh "mvn compile" 
+            }
+        }
+        stage('Test') {
+            steps {
+                sh "mvn test" 
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh "mvn package" 
+            }
+        }
+    }
+}
